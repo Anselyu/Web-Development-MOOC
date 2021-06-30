@@ -1,1 +1,1 @@
-First project: Basic HTML personal site
+First project: Create a simple personal site using HTML 
