@@ -11,14 +11,17 @@
     <p>email: 12381023@gmail.com</p>
     <p>phone number: 647-999-9999</p>
     <p>Address: 123 I love webdev avenue</p>
-
-    <form action="">
-        <label>Enter Your Name: </label>
-        <input type="text">
-        <input type="color">
+    <hr>
+    <form action="mailto:123123@gmail.com" method="post" enctype="text/plain">
+        <label>Enter Your Name:</label>
+        <input name="name" type="text" >
         <br>
-        <label for="">Enter your password:</label>
-        <input type="password">
+        <label>Enter Your Email:</label>
+        <input name="email" type="email" >
+        <br>
+        <label for="">Enter Your Message:</label>
+        <br>
+        <textarea name="message" cols="30" rows="10"></textarea>
         <input type="submit">
     </form>
 </body>
