@@ -1,0 +1,18 @@
+h1 {
+    color: red; 
+}
+.broccoli {
+    background-color: red;
+    height: 120px;
+}
+.bacon {
+    background-color: green;
+    height: 120px;
+}
+.bacon:hover {
+    background-color: gold;
+    height: 150px;
+}
+.circular {
+    border-radius: 50%;
+}
