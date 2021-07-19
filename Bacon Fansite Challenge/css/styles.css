@@ -1,6 +1,11 @@
 h1 {
     color: red; 
 }
-img {
+.broccoli {
     background-color: red;
+    height: 120px;
+}
+.bacon {
+    background-color: green;
+    height: 120px;
 }
