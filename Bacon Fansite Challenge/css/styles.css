@@ -9,3 +9,10 @@ h1 {
     background-color: green;
     height: 120px;
 }
+.bacon:hover {
+    background-color: gold;
+    height: 150px;
+}
+.circular {
+    border-radius: 50%;
+}
