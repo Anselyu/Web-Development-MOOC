@@ -2,18 +2,22 @@
     background-color: red; 
     height: 100px;
     width: 100px;
-    position: relative;
+    position: absolute;
     display: inline-block;
+    top: 200px;
     left: 200px;
+  
    
 }
 .blue {
     background-color: blue; 
     height: 100px;
     width: 100px;
-    position: relative;
+    position: absolute;
     display: inline-block;
-    right: 100px;
+    top: 100px;
+    left: 100px;
+   
     
    
 }
@@ -21,8 +25,11 @@
     background-color: yellow; 
     height: 100px;
     width: 100px;
-    position: relative;
     display: inline-block;
-    right: 100px;
+
+
     
+}
+body {
+    margin: 0px;
 }
