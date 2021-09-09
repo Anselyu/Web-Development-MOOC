@@ -18,14 +18,10 @@ h1 {
     padding-top: 100px;
 }
 .middle-container{
-    width:200px;
-    height:200px;
-    background-color: red;
+
 }
 .bottom-container{
-    width:200px;
-    height:200px;
-    background-color: blue;
+
 }
 .bottom-cloud{
     position: absolute;
@@ -37,4 +33,15 @@ h1 {
     position: absolute;
     right: 300px;
     top: 50px;
+}
+.profile-picture {
+    object-fit: cover;
+    width: 400px;
+    height:400px;
+    border-radius: 100%;
+}
+.skill {
+    object-fit: cover;
+    width: 450px;
+    height:450px;
 }
