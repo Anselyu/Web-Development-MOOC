@@ -5,8 +5,13 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 h1 {
-    margin-top: 0px;
+    margin-top: 50px;
+    font-size: 5rem;
     font-family: 'Dancing Script', cursive;
+    margin-bottom: 20px;
+}
+.description {
+    font-size: 2.5rem;
 }
 .description {
     font-family: 'PT Serif', serif;
@@ -16,6 +21,7 @@ h1 {
     background-color: #E4F9F5;
     position: relative;
     padding-top: 100px;
+    margin-bottom: 20px;
 }
 .middle-container{
 
@@ -27,12 +33,13 @@ h1 {
     position: absolute;
     left: 300px;
     bottom: 300px;
-
+    width: 200px;
 }
 .top-cloud {
     position: absolute;
     right: 300px;
     top: 50px;
+    width: 200px;
 }
 .profile-picture {
     object-fit: cover;
@@ -44,4 +51,7 @@ h1 {
     object-fit: cover;
     width: 450px;
     height:450px;
+}
+.mountain{
+    width: 700px;
 }
