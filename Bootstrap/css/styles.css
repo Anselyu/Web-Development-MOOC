@@ -76,13 +76,6 @@ i:hover {
 
 /* Testimonials Section */
 
-
-#testimonials {
-    padding: 7% 15%;
-    text-align: center;
-    background-color: #ef8172;
-    color: #fff;
-}
 h2 {
     font-family: "Montserrat";
     font-size: 3rem;
@@ -105,4 +98,10 @@ h2 {
 .logo {
     width: 15%;
     padding: 1em 2em;
+}
+.carousel-item{
+    padding: 7% 15%;
+    text-align: center;
+    background-color: #ef8172;
+    color: #fff;
 }
