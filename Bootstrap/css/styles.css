@@ -51,7 +51,7 @@ h1 {
 /* Features */
 #features{
     text-align: center;
-    margin: 5em 10em;
+    margin: 7% 15%;
 }
 .feature{
     padding: 2em 3em;
@@ -72,4 +72,37 @@ i {
 }
 i:hover {
     color: #ff4c68;
+}
+
+/* Testimonials Section */
+
+
+#testimonials {
+    padding: 7% 15%;
+    text-align: center;
+    background-color: #ef8172;
+    color: #fff;
+}
+h2 {
+    font-family: "Montserrat";
+    font-size: 3rem;
+    line-height: 1.5;
+    font-weight: 900;
+}
+
+.testimonial-image {
+    border-radius: 50%;
+    width: 10%;
+    margin: 1em;
+}
+
+#press {
+    background-color: #ef8172;
+    text-align: center;
+    padding: 0 0 7% 0;
+}
+
+.logo {
+    width: 15%;
+    padding: 1em 2em;
 }
