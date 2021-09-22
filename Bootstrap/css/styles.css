@@ -41,7 +41,7 @@ h1 {
 
 /* Buttons */
 .download-button {
-    margin: 3rem 0.3rem 0 0;
+    margin: 3rem 1rem 0 0;
 }
 /*Title image*/
 .title-image {
@@ -131,4 +131,29 @@ h2 {
         text-align: center;
         padding-bottom: 3rem;
     }
+}
+
+/* Call to Action */
+
+#cta {
+    background-color: #ff4c68;
+    padding: 7% 20%;
+    text-align: center;
+}
+.cta-heading {
+    font-size: 3.5rem;
+    font-family: "Montserrat";
+    font-weight: 900;
+    color: white;
+}
+
+/* footer */
+
+#footer {
+    padding: 4% 15%;
+    text-align: center;
+}
+.footer-icon{
+    margin: 1%;
+    color: black;
 }
