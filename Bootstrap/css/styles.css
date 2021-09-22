@@ -120,3 +120,15 @@ h2 {
 .pricing-column {
     padding: 3% 2%
 }
+@media (max-width: 991px) {
+    .title-image {
+        padding: 3em;
+        position: static;
+        transform: rotate(0);
+        width: 60%
+    }
+    #title {
+        text-align: center;
+        padding-bottom: 3rem;
+    }
+}
