@@ -23,10 +23,16 @@ h3 {
 
 /* General section selectors*/
 
+.coloured {
+    background-color: #ff4c68;
+    color: white;
+}
+.non-coloured {
+    background-color: white;
+}
+
 /* Title Section */
 #title {
-    background-color:#FF4c68;
-    color: white;
     padding-bottom: 10em;
     text-align: left;
 }
@@ -74,16 +80,10 @@ h3 {
 #features{
     padding: 7% 15%;
     position: relative;
-    background-color: white;
 }
 .feature{
     padding: 2em 3em;
 }
-/* Second Section */
-.package-item{
-    color: #8f8f8f;
-}
-
 i {
     padding: 0 0 0.3em 0;
     color: #ef8172;
@@ -101,8 +101,8 @@ i:hover {
 
 /* Press */
 #press {
-    background-color: #ef8172;
     padding: 0 0 7% 0;
+    background-color: #ef8172;
 }
 
 .logo {
@@ -117,8 +117,13 @@ i:hover {
 .card-btn {
     width: 100%;
 }
+
+/* Pricing Section */
 #pricing {
     padding: 5% 10%;
+}
+.package-item{
+    color: #8f8f8f;
 }
 .pricing-column {
     padding: 3% 2%
@@ -126,11 +131,8 @@ i:hover {
 
 /* Call to Action Section */
 #cta {
-    background-color: #ff4c68;
     padding: 7% 20%;
-    color: white;
 }
-
 
 /* Footer Section */
 #footer {
