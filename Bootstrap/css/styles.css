@@ -1,22 +1,47 @@
 body {
     font-family: 'Montserrat';
+    text-align: center;
 }
-#title {
-    background-color:#FF4c68;
-    color: white;
-}
-h1 {
-    font-family: 'Montserrat';
-    font-weight: 900;
-    font-size: 3.5rem;
+
+/* Heading selectors */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Montserrat";
     line-height: 1.5;
 }
+h1 {
+    font-weight: 900;
+    font-size: 3.5rem;
+}
+h2 {
+    font-size: 3rem;
+    font-weight: 900;
+}
+h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* General section selectors*/
+
+.coloured {
+    background-color: #ff4c68;
+    color: white;
+}
+.non-coloured {
+    background-color: white;
+}
+
+/* Title Section */
+#title {
+    padding-bottom: 10em;
+    text-align: left;
+}
+
 .container-fluid {
     padding: 3% 15%;
 }
 
-/* Navigation Bar  */
-
+/* Navigation Bar Section*/
 .navbar {
     padding: 0 0 3.5rem 0;
 }
@@ -38,33 +63,26 @@ h1 {
     color: white;
 }
 
-/* Buttons */
+/* Buttons Section*/
 .download-button {
-    margin: 3rem 0.3rem 0 0;
-}
-/*Title image*/
-.title-image {
-    width: 60%;
-    transform: rotate(19.5deg);
+    margin: 3rem 1rem 0 0;
 }
 
-/* Features */
+/*Title image*/
+.title-image {
+    width: 55%;
+    transform: rotate(19.5deg);
+    position: absolute;
+    right: 30%;
+}
+
+/* Features Section */
 #features{
-    text-align: center;
-    margin: 5em 10em;
+    padding: 7% 15%;
+    position: relative;
 }
 .feature{
     padding: 2em 3em;
-}
-/* Second Section */
-p{
-    color: #8f8f8f;
-}
-
-h3 {
-    font-family: 'Montserrat';
-    font-size: 1.5rem;
-    font-weight: bold;
 }
 i {
     padding: 0 0 0.3em 0;
@@ -72,4 +90,68 @@ i {
 }
 i:hover {
     color: #ff4c68;
+}
+
+/* Testimonials Section */
+.testimonial-image {
+    border-radius: 50%;
+    width: 10%;
+    margin: 1em;
+}
+
+/* Press */
+#press {
+    padding: 0 0 7% 0;
+    background-color: #ef8172;
+}
+
+.logo {
+    width: 15%;
+    padding: 1em 2em;
+}
+.carousel-item{
+    padding: 7% 15%;
+    background-color: #ef8172;
+    color: #fff;
+}
+.card-btn {
+    width: 100%;
+}
+
+/* Pricing Section */
+#pricing {
+    padding: 5% 10%;
+}
+.package-item{
+    color: #8f8f8f;
+}
+.pricing-column {
+    padding: 3% 2%
+}
+
+/* Call to Action Section */
+#cta {
+    padding: 7% 20%;
+}
+
+/* Footer Section */
+#footer {
+    padding: 4% 15%;
+}
+.footer-icon{
+    margin: 1%;
+    color: black;
+}
+
+@media (max-width: 991px) {
+    #title {
+        padding-bottom: 3rem;
+        text-align: center;
+    }
+    .title-image {
+        padding: 3em;
+        position: static;
+        transform: rotate(0);
+        width: 60%
+    }
 }
