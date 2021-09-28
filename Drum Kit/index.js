@@ -13,11 +13,13 @@ var tom_4 = new Audio("sounds/tom-4.mp3");
 for (var i = 0; i < 7; i++){
     mainButtons[i].addEventListener("click", function (){
       playSound(this.innerHTML);
+      buttonAnimation(this.innerHTML);
     });
 }
 
 document.addEventListener("keydown", function(event){
     playSound(event.key);
+    buttonAnimation(event.key);
 })
 
 function playSound(key) {
@@ -48,3 +50,13 @@ function playSound(key) {
     }
 }
 
+function buttonAnimation(key){
+    var activeButton = document.querySelector("." + key);
+
+    activeButton.classList.add("pressed");
+    setTimeout(function(){
+        activeButton.classList.remove("pressed");
+    }, 100 );
+  
+
+}
