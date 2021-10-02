@@ -35,7 +35,7 @@ function nextSequence(){
                 blueButton.play();
                 buttonAnimation("blue");
         }
-    }, 1000 );
+    }, 700 );
     correctSequence.push(nextButton);
     console.log(correctSequence);
 
@@ -47,9 +47,12 @@ function nextSequence(){
 // Let user enter the exact same array 
 // If user gets correct, append 1 more number to array and repeat to step 2. If not, then game over
 
-document.addEventListener("keydown", function(event){
+$(document).keypress(function(event){
     if (gameStateRunning == false){
-        startGame();
+        correctSequence = [];
+        userSequence = [];
+        nextSequence();
+        gameStateRunning = true;
     }
 })
 
@@ -103,13 +106,6 @@ function gameOver(){
     gameStateRunning = false;
     currentLevel = 0;
     $("h1").text("Game Over, Press Any Key to Restart");
-}
-
-function startGame() {
-    correctSequence = [];
-    userSequence = [];
-    nextSequence();
-    gameStateRunning = true;
 }
 
 function buttonAnimation(color){
