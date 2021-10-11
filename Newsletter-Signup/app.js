@@ -19,23 +19,26 @@ app.get("/", function(req, res){
 
 app.post('/', (req, res) => {
 
-    var userData = {
-    members: [{
-      email_address: req.body.email,
-      status: "subscribed",
-      merge_fields: {
-        FNAME: req.body.firstName,
-        LNAME: req.body.lastName
-      }
-    }],};
-   
-   const run = async () => {
-      const response = await mailchimp.lists.batchListMembers("138ef0e7c4", userData );
-      console.log(response);
+    const user = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email
+    }
+    
+    async function run() {
+        const response = await mailchimp.lists.addListMember("138ef0e7c4", {
+            email_address: user.email,
+            status: "subscribed",
+            merge_fields: {
+                FNAME: user.firstName,
+                LNAME: user.lastName
+            }
+        });
+            console.log(response);
     };
-    run();
-   
-  })
+        run();
+        res.send("hello world");
+})
 
 app.listen(3000, function(){
     console.log("Listening on port 3000");
