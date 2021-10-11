@@ -9,9 +9,9 @@ app.get("/", function(req, res){
 });
 
 app.post("/" , function(req , res){
-    firstName = req.body.firstName;
-    lastName = req.body.lastName;
-    email = req.body.email;
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var email = req.body.email;
 
     console.log("First Name: " + firstName + " Last Name: " + lastName + " Email: " + email);
 });
