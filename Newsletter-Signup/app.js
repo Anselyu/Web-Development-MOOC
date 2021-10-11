@@ -17,7 +17,9 @@ app.get("/", function(req, res){
     res.sendFile(__dirname + "/signup.html");
 });
 
-app.post('/', (req, res) => {
+app.post('/', function(req, res) {
+
+   
 
     const user = {
         firstName: req.body.firstName,
@@ -26,19 +28,31 @@ app.post('/', (req, res) => {
     }
     
     async function run() {
-        const response = await mailchimp.lists.addListMember("138ef0e7c4", {
-            email_address: user.email,
-            status: "subscribed",
-            merge_fields: {
-                FNAME: user.firstName,
-                LNAME: user.lastName
-            }
-        });
-            console.log(response);
+        try {
+            const response = await mailchimp.lists.addListMember("138ef0e7c4", {
+                email_address: user.email,
+                status: "subscribed",
+                merge_fields: {
+                    FNAME: user.firstName,
+                    LNAME: user.lastName
+                }
+            });
+            res.sendFile(__dirname + "/success.html");
+
+        } catch (error){
+            res.sendFile(__dirname + "/failure.html");
+        }
+           
     };
-        run();
-        res.send("hello world");
+    run();
+
 })
+
+app.post("/failure.html",function(req,res){
+    res.redirect("/");
+})
+
+
 
 app.listen(3000, function(){
     console.log("Listening on port 3000");
