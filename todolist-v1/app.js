@@ -4,21 +4,20 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-//const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 var items = [];
 var newItem = "";
 
 app.get("/", function(req, res){
 
-    var today = new Date();
+    let today = new Date();
 
-    var options = {
+    let options = {
         day: "numeric",
         weekday: "long",
         month: "long"
     }
 
-    var currentDay = today.toLocaleDateString("en-US", options);
+    let currentDay = today.toLocaleDateString("en-US", options);
 
     res.render('list', {currentDay: currentDay, newItems: items});
 });
@@ -28,9 +27,6 @@ app.post("/",function(req,res){
     items.push(newItem);
     res.redirect("/");
 })
-
-
-
 
 
 app.listen(3000, function(){
