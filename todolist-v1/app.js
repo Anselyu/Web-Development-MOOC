@@ -6,6 +6,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 var items = [];
+var workItems = [];
 var newItem = "";
 
 app.get("/", function(req, res){
@@ -20,13 +21,24 @@ app.get("/", function(req, res){
 
     let currentDay = today.toLocaleDateString("en-US", options);
 
-    res.render('list', {currentDay: currentDay, newItems: items});
+    res.render('list', {listTitle: currentDay, newItems: items});
 });
 
 app.post("/",function(req,res){
     newItem = req.body.newItem;
-    items.push(newItem);
-    res.redirect("/");
+
+    if (req.body.listType == "Work"){
+        workItems.push(newItem);
+        res.redirect("/work");
+    } else {
+        items.push(newItem);
+        res.redirect("/");
+    }
+    
+})
+
+app.get("/work", function(req,res){
+    res.render('list', {listTitle: "Work Day", newItems: workItems})
 })
 
 
