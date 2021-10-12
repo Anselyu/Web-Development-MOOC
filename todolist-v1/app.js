@@ -2,14 +2,12 @@ const express = require("express");
 const date = require(__dirname + "/date.js")
 const app = express();
 
-
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
-var items = [];
-var workItems = [];
-var newItem = "";
+const items = ["Eat", "Sleep"];
+const workItems = [];
 
 app.get("/", function(req, res){
     res.render('list', {listTitle: date.getDate(), newItems: items});
@@ -35,7 +33,6 @@ app.get("/work", function(req,res){
 app.get("/about", function(req,res){
     res.render('about');
 })
-
 
 app.listen(3000, function(){
     console.log("Listening on port 3000");
