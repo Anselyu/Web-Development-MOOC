@@ -25,6 +25,20 @@ app.get("/contact", function(req, res){
 app.get("/compose", function(req,res){
   res.render("compose")
 })
+
+
+app.get("/posts/:postName", function(req,res){
+  const postName = req.params.postName
+  posts.forEach(function(e){
+    if (e.postTitle == postName){
+      console.log("Match Found!");
+    }
+  })
+});
+
+
+
+
 app.post("/compose", function(req,res){
   const post = {
     postTitle: req.body.postTitle,
