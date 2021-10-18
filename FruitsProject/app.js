@@ -1,10 +1,7 @@
-
-
 const mongoose = require('mongoose');
 const { MongoServerClosedError } = require('mongoose/node_modules/mongodb');
 
 mongoose.connect("mongodb://localhost:27017/fruitsDB", {useNewUrlParser: true});
-
 
 const fruitsSchema = new mongoose.Schema({
   name: {
@@ -99,8 +96,6 @@ Person.updateOne({name: "John"}, {favouriteFruit: chicken}, function(err){
 // });
 
 //person.save();
-
-
 
 // const grape = new Fruit({
 //   name: "Grapes",
