@@ -48,12 +48,18 @@ Fruit.find(function(err, fruits){
   if (err){
     console.log(err);
   } else {
-    mongoose.connection.close();
     fruits.forEach(function(f){
-      console.log(f.name);
-      
+      console.log(f);
     })
     
+  }
+});
+
+Fruit.deleteMany({_id:["616d1793a19409607e41f97c", "616d1793a19409607e41f97b", "616d1793a19409607e41f97a"]}, function(err){
+  if (err) {
+    console.log (err);
+  } else {
+    console.log("Item successfully deleted");
   }
 });
 
