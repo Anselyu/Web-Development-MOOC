@@ -1,62 +1,118 @@
-const MongoClient = require('mongodb').MongoClient;
-const assert = require("assert");
+const mongoose = require('mongoose');
+const { MongoServerClosedError } = require('mongoose/node_modules/mongodb');
 
-const url = 'mongodb://localhost:27017';
+mongoose.connect("mongodb://localhost:27017/fruitsDB", {useNewUrlParser: true});
 
-const dbName = 'fruitsDB';
+const fruitsSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "Why no name?"]
+  },
+  rating: {
+    type: Number,
+    min: 0,
+    max: 10
+  },
+  review: String
+})
 
-const client = new MongoClient(url);
+const Fruit = mongoose.model("Fruit", fruitsSchema);
 
-client.connect(function(err){
-    assert.equal(null,err);
-    console.log("Connected successfully to server");
-
-    const db = client.db(dbName);
-
-    insertDocuments(db, function() {
-      client.close();
-    });
+const apple = new Fruit({
+  name: "Apple",
+  rating: 6,
+  review: "Not very good"
 });
 
-const insertDocuments = function(db, callback) {
-    // Get the documents collection
-    const collection = db.collection('fruits');
-    // Insert some documents
-    collection.insertMany([
-        {
-            name : "Apple",
-            score: 5,
-            review: "Kinda bad fruit"
-        }, 
-        {
-            name : "Orange",
-            score: 8,
-            review: "Much better fruit"
-        },    
-        {
-            name : "Banana",
-            score: 9,
-            review: "Great stuff!"
-        }
-    ], function(err, result) {
-        assert.equal(err, null);
-        assert.equal(3,result.insertedCount);
-        assert.equal(3,Object.keys(result.insertedIds).length);
+// apple.save();
+
+const personsSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  favouriteFruit: fruitsSchema
+})
+
+const Person = mongoose.model("Person", personsSchema);
+
+const banana = new Fruit({
+  name: "Banana",
+  rating: 10,
+  review: "Greatest fruit ever!"
+});
+
+const chicken = new Fruit({
+  name: "Chicken",
+  rating: 0,
+  review: "Not a fruit"
+});
 
 
-      console.log("Inserted 3 documents into the collection");
-      callback(result);
-    });
+const carl = new Person({
+  name: "Carl",
+  age: 17,
+  favouriteFruit: banana
+});
+
+// carl.save();
+
+Fruit.find(function(err, fruits){
+  if (err){
+    console.log(err);
+  } else {
+    fruits.forEach(function(f){
+      console.log(f);
+    })
   }
-
-  const findDocuments = function(db, callback) {
-    // Get the documents collection
-    const collection = db.collection('fruits');
-    // Find some documents
-    collection.find({}).toArray(function(err, fruits) {
-      assert.equal(err, null);
-      console.log("Found the following records");
-      console.log(fruits)
-      callback(fruits);
-    });
+});
+Person.find(function(err, people){
+  if (err){
+    console.log(err);
+  } else {
+    people.forEach(function(p){
+      console.log(p);
+    })
   }
+});
+
+Person.updateOne({name: "John"}, {favouriteFruit: chicken}, function(err){
+  if (err){
+    console.log(err);
+  } else {
+    console.log ("Successfuly updated");
+  }
+})
+
+// Fruit.deleteMany({_id:["616d1793a19409607e41f97c", "616d1793a19409607e41f97b", "616d1793a19409607e41f97a"]}, function(err){
+//   if (err) {
+//     console.log (err);
+//   } else {
+//     console.log("Item successfully deleted");
+//   }
+// });
+
+// const person = new Person({
+//   name: "John",
+//   age: 36
+// });
+
+//person.save();
+
+// const grape = new Fruit({
+//   name: "Grapes",
+//   rating: 8,
+//   review: "Pretty decent"
+// });
+
+// const grapefruit = new Fruit({
+//   name: "Grapefruit",
+//   rating: 1,
+//   review: "Terrible"
+// });
+
+// Fruit.insertMany([banana, grape, grapefruit], function(err){
+//   if (err){
+//     console.log(err);
+//   } else {
+//     console.log("Successfully saved fruits to database");
+//   }
+// })
