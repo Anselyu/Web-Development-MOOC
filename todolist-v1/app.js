@@ -21,28 +21,33 @@ const workItem = mongoose.model("WorkItem", itemsSchema);
 const items = ["Eat", "Sleep"];
 const workItems = [];
 
-//function updateDatabase()
-
-// const c = new Item({
-//     content: "Eat"
-// })
-// const a = new Item({
-//     content: "Eat"
-// })
-// const b = new Item({
-//     content: "Eat"
-// })
-
-// Item.insertMany([a, b, c], function(err){
-    
-// })
-
-
+const c = new Item({
+    content: "Eat"
+})
+const a = new Item({
+    content: "Sleep"
+})
+const b = new Item({
+    content: "Play"
+})
+const defaultItems = [a,b,c]
 
 
 app.get("/", function(req, res){
     Item.find({}, function(err, foundItems){
-        res.render('list', {listTitle: date.getDate(), newItems: foundItems});
+        if (foundItems.length == 0){
+            Item.insertMany(defaultItems, function(err){
+                if (err){
+                    console.log(err);
+                } else {
+                    console.log("default items successfuly saved");
+                    
+                }
+            })
+            res.redirect("/")
+        } else {
+            res.render('list', {listTitle: date.getDate(), newItems: foundItems});
+        }
     });
 });
 
