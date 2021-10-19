@@ -55,17 +55,24 @@ app.post("/",function(req,res){
     newItem = req.body.newItem;
 
     if (req.body.listType == "Work"){
-        workItems.push(newItem);
+        const item = new workItem({
+            content: newItem
+        });
+        item.save();
         res.redirect("/work");
     } else {
-        items.push(newItem);
+        const item = new Item({
+            content: newItem
+        });
+        item.save();
         res.redirect("/");
     }
-    
 })
 
 app.get("/work", function(req,res){
-    res.render('list', {listTitle: "Work Day", newItems: workItems})
+    workItem.find({}, function(err, foundItems){
+        res.render('list', {listTitle: "Work Day", newItems: foundItems});
+    })
 })
 
 app.get("/about", function(req,res){
