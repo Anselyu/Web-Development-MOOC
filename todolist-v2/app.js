@@ -14,12 +14,18 @@ const itemsSchema = new mongoose.Schema({
     content: String
 });
 
+const customListSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    items: [itemsSchema]
+})
+
 const Item = mongoose.model("Item", itemsSchema);
 
-const workItem = mongoose.model("WorkItem", itemsSchema);
-
-const items = ["Eat", "Sleep"];
-const workItems = [];
+const CustomList = mongoose.model("CustomList", customListSchema);
 
 const c = new Item({
     content: "Eat"
@@ -31,6 +37,7 @@ const b = new Item({
     content: "Play"
 })
 const defaultItems = [a,b,c]
+
 
 
 app.get("/", function(req, res){
@@ -54,34 +61,25 @@ app.get("/", function(req, res){
 app.post("/",function(req,res){
     const itemText = req.body.newItem;
 
-    if (req.body.listType == "Work"){
-        const item = new workItem({
-            content: itemText
-        });
-        item.save();
-        res.redirect("/work");
-    } else {
+    if (req.body.listType == date.getDate().split(" ")[0]){
         const item = new Item({
             content: itemText
         });
         item.save();
         res.redirect("/");
+    } else { // If the list is not the default list
+        CustomList.findOne({name: req.body.listType}, function(err, foundItem){ // Find current list that is being used
+            foundItem.items.push({content: itemText})
+            foundItem.save();
+        })
+        res.redirect("/" + req.body.listType);
     }
 })
 app.post("/delete", function(req,res){
-    const itemToDelete = req.body.itemContent;
+    const itemToDelete = req.body.itemID;
 
-    if (req.body.listType == "Work"){
-        workItem.deleteOne({content: itemToDelete}, function(err){
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("Successfully deleted");
-            }
-        })
-        res.redirect("/work")
-    } else {
-        Item.deleteOne({content: itemToDelete}, function(err){
+    if (req.body.listType == (date.getDate().split(" ")[0])){ // If the list is the default list
+        Item.findByIdAndDelete(itemToDelete, function(err){
             if (err) {
                 console.log(err);
             } else {
@@ -89,13 +87,40 @@ app.post("/delete", function(req,res){
             }
         })
         res.redirect("/")
+    } else { // If the list is not the default list
+        CustomList.findOne({name: req.body.listType}, function(err, foundItem){ 
+            foundItem.items.id(itemToDelete).remove();
+            foundItem.save();
+        })
+        res.redirect("/" + req.body.listType);
     }
 });
 
-app.get("/work", function(req,res){
-    workItem.find({}, function(err, foundItems){
-        res.render('list', {listTitle: "Work Day", newItems: foundItems});
+// app.get("/work", function(req,res){
+//     workItem.find({}, function(err, foundItems){
+//         res.render('list', {listTitle: "Work Day", newItems: foundItems});
+//     })
+// })
+
+app.get("/:listURL", function(req, res){
+    
+    const listURL = req.params.listURL
+
+    CustomList.findOne({name: listURL}, function(err, foundItem){
+        if (!foundItem){
+            const list = new CustomList({
+                name: listURL,
+                items: defaultItems
+                })
+            console.log("Successfully added " + listURL + " to the custom list.");
+            list.save();
+            res.redirect("/" + listURL);
+        } else {
+            console.log(foundItem.items)
+            res.render('list', {listTitle: listURL, newItems: foundItem.items});
+        }
     })
+    
 })
 
 app.get("/about", function(req,res){

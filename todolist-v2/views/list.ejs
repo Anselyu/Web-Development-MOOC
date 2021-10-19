@@ -9,7 +9,7 @@
     <%  newItems.forEach(function(item){    %>
         <form action="/delete" method="post">
             <div class="item">
-                <input onChange="this.form.submit()" type="checkbox" name="itemContent" value=<%= item.content %>>
+                <input onChange="this.form.submit()" type="checkbox" name="itemID" value=<%= item._id %>>
                 <input type="hidden" name="listType" value=<%= listTitle %>>
                 <p><%= item.content %></p>
             </div>
