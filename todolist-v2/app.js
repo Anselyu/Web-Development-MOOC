@@ -97,7 +97,7 @@ app.post("/delete", function(req,res){
 
 app.get("/:listURL", function(req, res){
     
-    const listURL = _.lowerCase(req.params.listURL);
+    const listURL = _.startCase(req.params.listURL);
 
     CustomList.findOne({name: listURL}, function(err, foundItem){
         if (!foundItem){ //If the list currently does not exist, adds list item with URL as its name
