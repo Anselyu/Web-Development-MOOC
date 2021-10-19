@@ -1,6 +1,7 @@
 const express = require("express");
 const date = require(__dirname + "/date.js")
 const app = express();
+const _ = require("lodash");
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
@@ -36,9 +37,7 @@ const a = new Item({
 const b = new Item({
     content: "Play"
 })
-const defaultItems = [a,b,c]
-
-
+const defaultItems = [a,b,c];
 
 app.get("/", function(req, res){
     Item.find({}, function(err, foundItems){
@@ -61,7 +60,7 @@ app.get("/", function(req, res){
 app.post("/",function(req,res){
     const itemText = req.body.newItem;
 
-    if (req.body.listType == date.getDate().split(" ")[0]){
+    if (req.body.listType == date.getDate()){
         const item = new Item({
             content: itemText
         });
@@ -69,7 +68,7 @@ app.post("/",function(req,res){
         res.redirect("/");
     } else { // If the list is not the default list
         CustomList.findOne({name: req.body.listType}, function(err, foundItem){ // Find current list that is being used
-            foundItem.items.push({content: itemText})
+            foundItem.items.push({content: itemText});
             foundItem.save();
         })
         res.redirect("/" + req.body.listType);
@@ -78,14 +77,14 @@ app.post("/",function(req,res){
 app.post("/delete", function(req,res){
     const itemToDelete = req.body.itemID;
 
-    if (req.body.listType == (date.getDate().split(" ")[0])){ // If the list is the default list
+    if (req.body.listType == date.getDate()){ // If the list is the default list
         Item.findByIdAndDelete(itemToDelete, function(err){
             if (err) {
                 console.log(err);
             } else {
                 console.log("Successfully deleted");
             }
-        })
+        });
         res.redirect("/")
     } else { // If the list is not the default list
         CustomList.findOne({name: req.body.listType}, function(err, foundItem){ 
@@ -96,18 +95,12 @@ app.post("/delete", function(req,res){
     }
 });
 
-// app.get("/work", function(req,res){
-//     workItem.find({}, function(err, foundItems){
-//         res.render('list', {listTitle: "Work Day", newItems: foundItems});
-//     })
-// })
-
 app.get("/:listURL", function(req, res){
     
-    const listURL = req.params.listURL
+    const listURL = _.lowerCase(req.params.listURL);
 
     CustomList.findOne({name: listURL}, function(err, foundItem){
-        if (!foundItem){
+        if (!foundItem){ //If the list currently does not exist, adds list item with URL as its name
             const list = new CustomList({
                 name: listURL,
                 items: defaultItems
@@ -116,7 +109,6 @@ app.get("/:listURL", function(req, res){
             list.save();
             res.redirect("/" + listURL);
         } else {
-            console.log(foundItem.items)
             res.render('list', {listTitle: listURL, newItems: foundItem.items});
         }
     })
