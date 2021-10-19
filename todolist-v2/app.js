@@ -68,6 +68,29 @@ app.post("/",function(req,res){
         res.redirect("/");
     }
 })
+app.post("/delete", function(req,res){
+    const itemToDelete = req.body.itemContent;
+
+    if (req.body.listType == "Work"){
+        workItem.deleteOne({content: itemToDelete}, function(err){
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Successfully deleted");
+            }
+        })
+        res.redirect("/work")
+    } else {
+        Item.deleteOne({content: itemToDelete}, function(err){
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Successfully deleted");
+            }
+        })
+        res.redirect("/")
+    }
+});
 
 app.get("/work", function(req,res){
     workItem.find({}, function(err, foundItems){
