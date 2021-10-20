@@ -17,7 +17,7 @@ const postSchema = mongoose.Schema({
 
 const Post = mongoose.model("Post", postSchema);
 
-let posts = [];
+// let posts = [];
 
 app.set('view engine', 'ejs');
 
@@ -25,7 +25,12 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.get("/", function(req, res){
-  res.render("home", {startingContent: homeStartingContent, posts: posts});
+  Post.find({}, function(err, foundItems){
+    res.render("home", {startingContent: homeStartingContent, posts: foundItems});
+  });
+
+
+ 
 });
 app.get("/about", function(req, res){
   res.render("about", {startingContent: aboutContent});
@@ -39,32 +44,64 @@ app.get("/compose", function(req,res){
 
 
 app.get("/posts/:postName", function(req,res){
-  const postName = _.lowerCase(req.params.postName);
-  let matchFound = false;
-  posts.forEach(function(e){
-    const storedTitle = _.lowerCase(e.postTitle);
-    if (storedTitle == postName){
-      res.render("post", {
-        postTitle: e.postTitle,
-        postBody: e.postBody
-      });
-      matchFound = true;
-    }
-  })
+  const postName = _.startCase(req.params.postName);
 
-  if (!matchFound){
-    res.send("Error 404: post not found");
-  }
- 
+
+  Post.findOne({postTitle: postName}, function(err, foundPost){ // Validate to make sure post exists
+    if (!foundPost){
+        console.log("post not found");
+    } else {
+        res.render("post", {
+        postTitle: foundPost.postTitle,
+        postBody: foundPost.postBody
+        });
+      }
+  });
+
+
+
+  // Post.findOne({postTitle: postName}, function(err, foundPost){ // Validate to make sure post exists
+  //   if (!foundPost){
+  //     Post.find({}, function(err, foundPosts){ // 
+  //       foundPosts.forEach(function(post){ //Check every post to see if the name matches the directory entered. If there's a match, save postID
+  //         const postTitle = _.lowerCase(post.postTitle);
+  //         if (postTitle == postName){ 
+  //           res.redirect("/posts/" + post._id);
+  //         }
+  //       })
+  //     });
+  //   } else {
+  //     console.log("I'm here");
+  //       res.render("post", {
+  //       postTitle: foundPost.postTitle,
+  //       postBody: foundPost.postBody
+  //       });
+  //     }
+  // });
+
 
 });
+  // posts.forEach(function(e){ //Validate to make sure post exists
+  //   const storedTitle = _.lowerCase(e.postTitle);
+  //   if (storedTitle == postName){
+  //     res.render("post", {
+  //       postTitle: e.postTitle,
+  //       postBody: e.postBody
+  //     });
+  //     matchFound = true;
+  //   }
+  // })
+
+
+
 
 app.post("/compose", function(req,res){
-  const post = {
-    postTitle: req.body.postTitle,
+  const postTitle = _.startCase(req.body.postTitle);
+  const post = new Post ({
+    postTitle: postTitle,
     postBody: req.body.postBody
-  }
-  posts.push(post);
+  });
+  post.save();
   res.redirect("/");
 });
 
