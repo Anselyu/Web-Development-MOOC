@@ -7,17 +7,16 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 
 const app = express();
 
+// Mongoose modules
 const mongoose = require("mongoose");
 mongoose.connect('mongodb://localhost:27017/postDB');
 
 const postSchema = mongoose.Schema({
   postTitle: String,
   postBody: String
-})
+});
 
 const Post = mongoose.model("Post", postSchema);
-
-// let posts = [];
 
 app.set('view engine', 'ejs');
 
@@ -29,8 +28,6 @@ app.get("/", function(req, res){
     res.render("home", {startingContent: homeStartingContent, posts: foundItems});
   });
 
-
- 
 });
 app.get("/about", function(req, res){
   res.render("about", {startingContent: aboutContent});
@@ -46,8 +43,7 @@ app.get("/compose", function(req,res){
 app.get("/posts/:postID", function(req,res){
   const postID = req.params.postID;
 
-
-  Post.findOne({_id: postID}, function(err, foundPost){ // Validate to make sure post exists
+  Post.findOne({_id: postID}, function(err, foundPost){ // Validate to make sure post exists. If it does, then render it. 
     if (!foundPost){
         res.send("Post Not Found");
     } else {
@@ -57,43 +53,7 @@ app.get("/posts/:postID", function(req,res){
         });
       }
   });
-
-
-
-  // Post.findOne({postTitle: postName}, function(err, foundPost){ // Validate to make sure post exists
-  //   if (!foundPost){
-  //     Post.find({}, function(err, foundPosts){ // 
-  //       foundPosts.forEach(function(post){ //Check every post to see if the name matches the directory entered. If there's a match, save postID
-  //         const postTitle = _.lowerCase(post.postTitle);
-  //         if (postTitle == postName){ 
-  //           res.redirect("/posts/" + post._id);
-  //         }
-  //       })
-  //     });
-  //   } else {
-  //     console.log("I'm here");
-  //       res.render("post", {
-  //       postTitle: foundPost.postTitle,
-  //       postBody: foundPost.postBody
-  //       });
-  //     }
-  // });
-
-
 });
-  // posts.forEach(function(e){ //Validate to make sure post exists
-  //   const storedTitle = _.lowerCase(e.postTitle);
-  //   if (storedTitle == postName){
-  //     res.render("post", {
-  //       postTitle: e.postTitle,
-  //       postBody: e.postBody
-  //     });
-  //     matchFound = true;
-  //   }
-  // })
-
-
-
 
 app.post("/compose", function(req,res){
   const post = new Post ({
