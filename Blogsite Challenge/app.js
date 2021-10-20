@@ -43,13 +43,13 @@ app.get("/compose", function(req,res){
 })
 
 
-app.get("/posts/:postName", function(req,res){
-  const postName = _.startCase(req.params.postName);
+app.get("/posts/:postID", function(req,res){
+  const postID = req.params.postID;
 
 
-  Post.findOne({postTitle: postName}, function(err, foundPost){ // Validate to make sure post exists
+  Post.findOne({_id: postID}, function(err, foundPost){ // Validate to make sure post exists
     if (!foundPost){
-        console.log("post not found");
+        res.send("Post Not Found");
     } else {
         res.render("post", {
         postTitle: foundPost.postTitle,
@@ -96,9 +96,8 @@ app.get("/posts/:postName", function(req,res){
 
 
 app.post("/compose", function(req,res){
-  const postTitle = _.startCase(req.body.postTitle);
   const post = new Post ({
-    postTitle: postTitle,
+    postTitle: req.body.postTitle,
     postBody: req.body.postBody
   });
   post.save();

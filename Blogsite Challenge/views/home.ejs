@@ -6,7 +6,7 @@
 <%  posts.forEach(function(element){  %>
     <h1><%= element.postTitle %></h1>
     <p><%= element.postBody.substring(0,100) %>...
-    <a href="/posts/<%= element.postTitle %>">Read More</a>
+    <a href="/posts/<%= element._id%>">Read More</a>
     </p>
 <%  });                               %>
 
