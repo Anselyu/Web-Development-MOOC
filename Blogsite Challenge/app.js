@@ -7,7 +7,16 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 
 const app = express();
 
-let posts = [];
+// Mongoose modules
+const mongoose = require("mongoose");
+mongoose.connect('mongodb://localhost:27017/postDB');
+
+const postSchema = mongoose.Schema({
+  postTitle: String,
+  postBody: String
+});
+
+const Post = mongoose.model("Post", postSchema);
 
 app.set('view engine', 'ejs');
 
@@ -15,7 +24,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.get("/", function(req, res){
-  res.render("home", {startingContent: homeStartingContent, posts: posts});
+  Post.find({}, function(err, foundItems){
+    res.render("home", {startingContent: homeStartingContent, posts: foundItems});
+  });
+
 });
 app.get("/about", function(req, res){
   res.render("about", {startingContent: aboutContent});
@@ -28,51 +40,29 @@ app.get("/compose", function(req,res){
 })
 
 
-app.get("/posts/:postName", function(req,res){
-  const postName = _.lowerCase(req.params.postName);
-  let matchFound = false;
-  posts.forEach(function(e){
-    const storedTitle = _.lowerCase(e.postTitle);
-    if (storedTitle == postName){
-      res.render("post", {
-        postTitle: e.postTitle,
-        postBody: e.postBody
-      });
-      matchFound = true;
-    }
-  })
+app.get("/posts/:postID", function(req,res){
+  const postID = req.params.postID;
 
-  if (!matchFound){
-    res.send("Error 404: post not found");
-  }
- 
-
+  Post.findOne({_id: postID}, function(err, foundPost){ // Validate to make sure post exists. If it does, then render it. 
+    if (!foundPost){
+        res.send("Post Not Found");
+    } else {
+        res.render("post", {
+        postTitle: foundPost.postTitle,
+        postBody: foundPost.postBody
+        });
+      }
+  });
 });
-
-
-
 
 app.post("/compose", function(req,res){
-  const post = {
+  const post = new Post ({
     postTitle: req.body.postTitle,
     postBody: req.body.postBody
-  }
-  posts.push(post);
+  });
+  post.save();
   res.redirect("/");
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
