@@ -7,6 +7,16 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 
 const app = express();
 
+const mongoose = require("mongoose");
+mongoose.connect('mongodb://localhost:27017/postDB');
+
+const postSchema = mongoose.Schema({
+  postTitle: String,
+  postBody: String
+})
+
+const Post = mongoose.model("Post", postSchema);
+
 let posts = [];
 
 app.set('view engine', 'ejs');
@@ -49,9 +59,6 @@ app.get("/posts/:postName", function(req,res){
 
 });
 
-
-
-
 app.post("/compose", function(req,res){
   const post = {
     postTitle: req.body.postTitle,
@@ -60,19 +67,6 @@ app.post("/compose", function(req,res){
   posts.push(post);
   res.redirect("/");
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
