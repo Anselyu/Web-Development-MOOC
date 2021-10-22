@@ -68,6 +68,15 @@ app.route("/articles/:articleTitle")
             res.send("No articles found");
         }
     })
+})
+.put(function(req,res){
+    Article.updateOne({title: req.params.articleTitle}, {title: req.body.title, content: req.body.content}, function(err){
+        if (!err){
+            res.send("Successfully updated document");
+        } else {
+            res.send(err);
+        }
+    })
 });
 
 app.listen(3000, function(){
