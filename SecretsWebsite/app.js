@@ -10,6 +10,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const findOrCreate = require('mongoose-findorcreate');
+const e = require('express');
 // const bcrypt = require("bcrypt");
 // const saltRounds = 10;
 
@@ -32,7 +33,8 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     googleId: String,
-    facebookId: String
+    facebookId: String,
+    secret: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -126,11 +128,15 @@ app.get("/register", function(req, res){
 })
 
 app.get("/secrets", function(req,res){
-    if(req.isAuthenticated()){
-        res.render("secrets");
-    } else {
-        res.redirect("/login");
-    }
+    User.find({"secret": {$ne: null}}, function(err, foundUsers){
+        if(err){
+            console.log(err);
+        } else {
+            if (foundUsers){
+                res.render("secrets", {usersWithSecrets: foundUsers});
+            }
+        }
+    })
 });
 
 app.post("/register", function(req, res){
@@ -169,6 +175,31 @@ app.get("/logout", function(req,res){
     res.redirect("/");
 });
 
+app.get("/submit",function(req,res){
+    if(req.isAuthenticated()){
+        res.render("submit");
+    } else {
+        res.redirect("/login");
+    }
+})
+app.post("/submit", function(req,res){
+    const secret = req.body.secret;
+    console.log(req.user);
+    User.findOne({_id: req.user._id}, function(err, foundUser){
+        console.log(req.user);
+        if (err){
+            console.log(err);
+        } else if (foundUser){
+            foundUser.secret = secret;
+            foundUser.save(function(){
+                res.redirect("/secrets");
+            });
+        } else {
+            console.log("unknown error has occured");
+        }
+    });
+
+})
 app.listen(3000, function(){
     console.log("Server started on port 3000");
 });
