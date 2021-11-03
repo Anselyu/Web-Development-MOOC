@@ -4,8 +4,9 @@ import React from "react";
 //to show a copyright message in a <p> with a dynamically updated year.
 const currentDate = new Date();
 
+
 function Footer(){
-    return (<p>Copyright ⓒ {currentDate.getFullYear}</p>);
+    return (<footer><p>Copyright ⓒ {currentDate.getFullYear()}</p></footer>);
 }
 
 export default Footer;
