@@ -19,6 +19,14 @@ const emojipedia = [
       name: "Rolling On The Floor, Laughing",
       meaning:
         "This is funny! A smiley face, rolling on the floor, laughing. The face is laughing boundlessly. The emoji version of “rofl“. Stands for „rolling on the floor, laughing“."
+    },
+    {
+        id: 4,
+        emoji: "😀",
+        name: "Grinning Face",
+        meaning: "A yellow face with simple, open eyes and a broad, open smile, showing upper teeth and tongue on some platforms. Often conveys general pleasure and good cheer or humor."
     }
-  ];
+];
+
+export default emojipedia;
   
