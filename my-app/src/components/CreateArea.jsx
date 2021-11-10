@@ -30,7 +30,7 @@ function CreateArea(props) {
         }
         <textarea
           onClick={() => {
-            setClicked(!isClicked);
+            setClicked(true);
           }}
           onChange={onChange}
           name="content"
