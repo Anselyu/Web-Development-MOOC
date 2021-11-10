@@ -7,7 +7,6 @@ function CreateArea(props) {
   const [noteTitle, setNoteTitle] = useState();
   const [noteContent, setNoteContent] = useState();
 
-
   function onChange(event) {
     const {name, value} = event.target;
     if (name === "title") {
@@ -19,10 +18,7 @@ function CreateArea(props) {
 
   return (
     <div>
-      <form 
-        className="create-note"
-    
-      >
+      <form className="create-note">
         <input
           onChange={onChange}
           name="title"
@@ -37,15 +33,17 @@ function CreateArea(props) {
           value={noteContent}
         />
         <Zoom in={true}>
-            <Fab     onClick={(event) => {
-          props.onAdd({
+          <Fab onClick={(event) => {
+            props.onAdd({
             title: noteTitle,
             content: noteContent
           });
           event.preventDefault();
           setNoteTitle("");
           setNoteContent("");
-        }}><AddIcon /></Fab>
+          }}>
+            <AddIcon />
+          </Fab>
         </Zoom>
       </form>
     </div>
