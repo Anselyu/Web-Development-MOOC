@@ -7,8 +7,7 @@ function CreateArea(props) {
   // const newNote = ;
 
   function onChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
+    const {name, value} = event.target;
     // console.log(value);
     // console.log(name);
     if (name === "title") {
