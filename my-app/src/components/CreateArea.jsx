@@ -4,12 +4,9 @@ function CreateArea(props) {
   const [noteTitle, setNoteTitle] = useState();
   const [noteContent, setNoteContent] = useState();
 
-  // const newNote = ;
 
   function onChange(event) {
     const {name, value} = event.target;
-    // console.log(value);
-    // console.log(name);
     if (name === "title") {
       setNoteTitle(value);
     } else {
@@ -19,7 +16,8 @@ function CreateArea(props) {
 
   return (
     <div>
-      <form
+      <form 
+        className="create-note"
         onSubmit={(event) => {
           props.onAdd({
             title: noteTitle,
